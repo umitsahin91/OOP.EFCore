@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OOP.EFCore.ConsoleApp.DAL.Mapping;
 using OOP.EFCore.ConsoleApp.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace OOP.EFCore.ConsoleApp.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookAppDb;");
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new BookMap());
         }
     }
 }

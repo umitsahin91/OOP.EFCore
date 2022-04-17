@@ -9,10 +9,8 @@ namespace OOP.EFCore.ConsoleApp.Entities
 {
     public class Book
     {
-        [Key]
         public int BookId { get; set; }
-        [MaxLength(50)]
-        [Required]
         public string Title { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
