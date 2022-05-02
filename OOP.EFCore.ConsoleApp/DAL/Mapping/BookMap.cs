@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OOP.EFCore.ConsoleApp.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,14 +17,19 @@ namespace OOP.EFCore.ConsoleApp.DAL.Mapping
                 .IsRequired()
                 .HasMaxLength(250);
             builder.Property(b => b.CreatedDate)
-                .HasDefaultValue(DateTime.Now);
+                .HasDefaultValueSql("GETDATE()");
 
             builder.HasData(
-                new Book { BookId=1,Title="Devlet"},
-                new Book { BookId = 2, Title = "Yoldaki İşaretler" },
-                new Book { BookId = 3, Title = "Yalnızlık Sözleri" }
+                new Book { BookId = 1, Title = "Devlet" ,CategoryId=3},
+                new Book { BookId = 2, Title = "Yoldaki İşaretler" ,CategoryId=3},
+                new Book { BookId = 3, Title = "Yalnızlık Sözleri" ,CategoryId=3}
 
                 );
+            builder.HasOne(b => b.Category)
+                .WithMany(c => c.Books)
+                .HasForeignKey(b => b.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);//DeleteBehavior.SetNull
         }
+
     }
 }
